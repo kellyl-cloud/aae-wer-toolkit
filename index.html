@@ -1,15 +1,11 @@
 <!DOCTYPE html><html><head><meta charset="utf-8"><title>AAE WER Toolkit</title>
-<style>*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,sans-serif}body{background:#f5f5f5;padding:32px 16px;color:#111}.wrap{max-width:700px;margin:0 auto}h1{font-size:20px;font-weight:600;margin-bottom:6px}.sub{font-size:14px;color:#666;margin-bottom:24px}.card{background:#fff;border:1px solid #e5e5e5;border-radius:12px;padding:20px;margin-bottom:16px}.card h3{font-size:12px;font-weight:600;color:#888;letter-spacing:.05em;margin-bottom:14px;text-transform:uppercase}label{display:block;font-size:13px;color:#555;margin-bottom:4px;margin-top:12px}label:first-of-type{margin-top:0}input[type=text],input[type=password]{width:100%;padding:9px 12px;border:1px solid #ddd;border-radius:8px;font-size:14px}textarea{width:100%;padding:9px 12px;border:1px solid #ddd;border-radius:8px;font-size:12px;font-family:monospace;height:100px;resize:vertical}.help{font-size:12px;color:#999;margin-top:4px}.btn{width:100%;padding:11px;font-size:15px;font-weight:600;background:#111;color:#fff;border:none;border-radius:8px;cursor:pointer;margin-top:8px}.btn:disabled{opacity:.4;cursor:not-allowed}.btn:hover:not(:disabled){background:#333}.btn-sec{background:#fff;color:#111;border:1px solid #ddd}.btn-sec:hover:not(:disabled){background:#f5f5f5}.tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}.tab{padding:9px 16px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid #ddd;background:#fff;color:#666}.tab.active{background:#111;color:#fff;border-color:#111}.section{display:none}.section.active{display:block}.badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:600}.b-good{background:#f0faf4;color:#1a7a3f}.b-warn{background:#fff8e6;color:#b07000}.b-bad{background:#fff5f5;color:#c00}.b-info{background:#e8f0fe;color:#1a56db}.b-neu{background:#f5f5f5;color:#555}table{width:100%;border-collapse:collapse;font-size:12px}th{text-align:left;font-size:11px;font-weight:600;color:#888;padding:6px 8px;border-bottom:1px solid #eee}td{padding:7px 8px;border-bottom:1px solid #f0f0f0;vertical-align:top}.tbl-wrap{max-height:300px;overflow-y:auto}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}.stat{background:#f9f9f9;border-radius:8px;padding:10px 12px}.stat-n{font-size:22px;font-weight:600}.stat-l{font-size:11px;color:#888;margin-top:2px}.logbox{background:#f9f9f9;border-radius:8px;padding:10px 12px;height:150px;overflow-y:auto;font-size:12px;font-family:monospace}.lok{color:#1a7a3f}.lerr{color:#c00}.lwarn{color:#b07000}.guide-box{background:#f9f9f9;border-radius:8px;padding:16px;font-size:13px;line-height:1.8;white-space:pre-wrap;max-height:500px;overflow-y:auto}.pbar-bg{background:#eee;border-radius:99px;height:8px;margin:8px 0}.pbar{background:#111;height:8px;border-radius:99px;width:0%;transition:width .3s}.notice{font-size:13px;color:#666;background:#f9f9f9;border-radius:8px;padding:12px 14px;margin-bottom:12px;line-height:1.6}.saved{display:none;font-size:13px;color:#1a7a3f;background:#f0faf4;border-radius:8px;padding:10px 14px;margin-top:8px}</style></head><body>
+<style>*{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,sans-serif}body{background:#f5f5f5;padding:32px 16px;color:#111}.wrap{max-width:700px;margin:0 auto}h1{font-size:20px;font-weight:600;margin-bottom:6px}.sub{font-size:14px;color:#666;margin-bottom:24px}.card{background:#fff;border:1px solid #e5e5e5;border-radius:12px;padding:20px;margin-bottom:16px}.card h3{font-size:12px;font-weight:600;color:#888;letter-spacing:.05em;margin-bottom:14px;text-transform:uppercase}label{display:block;font-size:13px;color:#555;margin-bottom:4px;margin-top:12px}label:first-of-type{margin-top:0}input[type=text],input[type=password]{width:100%;padding:9px 12px;border:1px solid #ddd;border-radius:8px;font-size:14px}textarea{width:100%;padding:9px 12px;border:1px solid #ddd;border-radius:8px;font-size:12px;font-family:monospace;height:100px;resize:vertical}.help{font-size:12px;color:#999;margin-top:4px}.btn{width:100%;padding:11px;font-size:15px;font-weight:600;background:#111;color:#fff;border:none;border-radius:8px;cursor:pointer;margin-top:8px}.btn:disabled{opacity:.4;cursor:not-allowed}.btn:hover:not(:disabled){background:#333}.btn-sec{background:#fff;color:#111;border:1px solid #ddd}.btn-sec:hover:not(:disabled){background:#f5f5f5}.tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}.tab{padding:9px 16px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid #ddd;background:#fff;color:#666}.tab.active{background:#111;color:#fff;border-color:#111}.section{display:none}.section.active{display:block}.badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:600}.b-good{background:#f0faf4;color:#1a7a3f}.b-warn{background:#fff8e6;color:#b07000}.b-bad{background:#fff5f5;color:#c00}.b-neu{background:#f5f5f5;color:#555}table{width:100%;border-collapse:collapse;font-size:12px}th{text-align:left;font-size:11px;font-weight:600;color:#888;padding:6px 8px;border-bottom:1px solid #eee}td{padding:7px 8px;border-bottom:1px solid #f0f0f0;vertical-align:top}.tbl-wrap{max-height:300px;overflow-y:auto}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}.stat{background:#f9f9f9;border-radius:8px;padding:10px 12px}.stat-n{font-size:22px;font-weight:600}.stat-l{font-size:11px;color:#888;margin-top:2px}.logbox{background:#f9f9f9;border-radius:8px;padding:10px 12px;height:150px;overflow-y:auto;font-size:12px;font-family:monospace}.lok{color:#1a7a3f}.lerr{color:#c00}.lwarn{color:#b07000}.guide-box{background:#f9f9f9;border-radius:8px;padding:16px;font-size:13px;line-height:1.8;white-space:pre-wrap;max-height:500px;overflow-y:auto}.pbar-bg{background:#eee;border-radius:99px;height:8px;margin:8px 0}.pbar{background:#111;height:8px;border-radius:99px;width:0%;transition:width .3s}.notice{font-size:13px;color:#555;background:#f9f9f9;border-radius:8px;padding:12px 14px;margin-bottom:12px;line-height:1.6}</style></head><body>
 <div class="wrap">
 <h1>AAE transcription quality toolkit</h1>
-<p class="sub">Benchmark WER against CORAAL, re-transcribe with AAE-tuned prompts, generate annotator guides.</p>
+<p class="sub">Benchmark WER against CORAAL · Re-transcribe with AAE-tuned prompts · Generate annotator guides</p>
 
-<div class="card">
-<h3>API keys</h3>
-<label>OpenAI API key</label><input type="password" id="openai-key" placeholder="sk-..."/><p class="help">Required for all three tools</p>
-<label>Ango Hub API key</label><input type="password" id="ango-key" placeholder="feaa698b-..."/><p class="help">Only needed for the re-transcription tool</p>
-<button class="btn" onclick="saveKeys()">Save keys</button>
-<div class="saved" id="keys-saved">✓ Keys saved!</div>
+<div class="card" style="background:#f0faf4;border-color:#c3e6cb;padding:12px 16px">
+<p style="font-size:13px;color:#1a7a3f;font-weight:500">✓ API keys loaded from server — ready to go</p>
 </div>
 
 <div class="tabs">
@@ -22,7 +18,7 @@
 <div class="section active" id="tab-wer">
 <div class="card">
 <h3>WER benchmark against CORAAL</h3>
-<div class="notice">Downloads real AAE audio from the CORAAL corpus (university sociolinguistic interviews with gold standard transcripts), transcribes with Whisper, and calculates your baseline WER + error patterns. This gives you a benchmark to measure improvement against.</div>
+<div class="notice">Downloads real AAE audio from the CORAAL corpus (university sociolinguistic interviews with gold standard transcripts), transcribes with Whisper, and calculates your baseline WER and top error patterns.</div>
 <button class="btn" id="wer-btn" onclick="runWER()">Run WER benchmark</button>
 </div>
 <div class="card" id="wer-results" style="display:none">
@@ -36,7 +32,7 @@
 <div class="logbox" id="wer-log"></div>
 <div style="margin-top:16px">
 <h3 style="font-size:12px;font-weight:600;color:#888;text-transform:uppercase;margin-bottom:8px">Top error patterns</h3>
-<div class="tbl-wrap"><table><thead><tr><th>Gold transcript said</th><th>Whisper said</th><th>Times</th><th>Likely AAE feature</th></tr></thead><tbody id="wer-errors-body"></tbody></table></div>
+<div class="tbl-wrap"><table><thead><tr><th>Gold said</th><th>Whisper said</th><th>Times</th><th>Likely AAE feature</th></tr></thead><tbody id="wer-errors-body"></tbody></table></div>
 </div>
 <button class="btn btn-sec" style="margin-top:12px" onclick="downloadWERReport()">Download WER report (CSV)</button>
 </div>
@@ -46,14 +42,13 @@
 <div class="section" id="tab-retranscribe">
 <div class="card">
 <h3>Re-transcribe AAE audio</h3>
-<div class="notice">Paste rows from your dialect_results.csv where dialect = "African American English". The tool re-transcribes each file using a Whisper prompt tuned to preserve AAE features instead of normalizing them to Standard American English.</div>
-<label>Paste AAE rows from your dialect results CSV</label>
-<textarea id="rt-csv" placeholder="external_id,audio_url,dialect&#10;file001.wav,https://...,African American English&#10;file002.wav,https://...,African American English"></textarea>
-<p class="help">Copy the header row + all AAE rows from dialect_results.csv and paste here</p>
+<div class="notice">Paste rows from your dialect_results.csv where dialect = "African American English". Re-transcribes each file using a Whisper prompt that preserves AAE features instead of normalizing them.</div>
+<label>Paste AAE rows from dialect_results.csv (include header row)</label>
+<textarea id="rt-csv" placeholder="external_id,audio_url,dialect,transcript&#10;file001.wav,https://...,African American English,he going to the store"></textarea>
 <button class="btn" id="rt-btn" onclick="runRetranscribe()">Start re-transcription</button>
 </div>
 <div class="card" id="rt-results" style="display:none">
-<h3>Re-transcription results</h3>
+<h3>Results</h3>
 <div class="stats">
 <div class="stat"><div class="stat-n" id="rt-done">0</div><div class="stat-l">Done</div></div>
 <div class="stat"><div class="stat-n" id="rt-improved">0</div><div class="stat-l">Changed</div></div>
@@ -73,9 +68,9 @@
 <div class="section" id="tab-guide">
 <div class="card">
 <h3>Generate annotator guide</h3>
-<div class="notice">Generates a practical cheat sheet for your annotators covering the most common AAE features they need to preserve — not correct. Run the WER benchmark first to auto-populate the error patterns below, or leave blank for a general guide.</div>
-<label>Error patterns from WER benchmark (auto-filled after benchmark, or paste your own)</label>
-<textarea id="guide-errors" placeholder="e.g. 'going' transcribed as 'gonna' (12x)&#10;'ask' transcribed as 'aks' (8x)"></textarea>
+<div class="notice">Generates a practical cheat sheet for annotators covering AAE features they need to preserve. Run the WER benchmark first to auto-populate error patterns, or leave blank for a general guide.</div>
+<label>Error patterns (auto-filled after WER benchmark, or paste your own)</label>
+<textarea id="guide-errors" placeholder="e.g. going transcribed as gonna (12x)&#10;ask transcribed as aks (8x)"></textarea>
 <button class="btn" id="guide-btn" onclick="generateGuide()">Generate annotator guide</button>
 </div>
 <div class="card" id="guide-results" style="display:none">
@@ -88,7 +83,6 @@
 
 <script>
 const P='';
-const KEYS_SAVED=true;
 let werData=[],rtData=[],guideText='';
 
 function switchTab(t){
@@ -98,15 +92,7 @@ function switchTab(t){
   });
 }
 
-async function saveKeys(){
-  const ok=document.getElementById('openai-key').value.trim();
-  const ak=document.getElementById('ango-key').value.trim();
-  await fetch(`${P}/set-keys`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({openaiKey:ok,angoKey:ak})});
-  const s=document.getElementById('keys-saved');s.style.display='block';
-  setTimeout(()=>s.style.display='none',3000);
-}
-
-// ── WER ─────────────────────────────────────────────────────
+// ── WER ──────────────────────────────────────────────────────
 function werLog(msg,t){const el=document.getElementById('wer-log');const d=document.createElement('div');d.className=t?'l'+t:'';d.textContent=new Date().toLocaleTimeString()+'  '+msg;el.appendChild(d);el.scrollTop=el.scrollHeight;}
 
 function computeWER(ref,hyp){
@@ -119,7 +105,6 @@ function computeWER(ref,hyp){
     if(r[i-1]===h[j-1])dp[i][j]=dp[i-1][j-1];
     else dp[i][j]=1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
   }
-  // traceback for error pairs
   const pairs=[];let i=m,j=n;
   while(i>0||j>0){
     if(i>0&&j>0&&r[i-1]===h[j-1]){i--;j--;}
@@ -131,60 +116,56 @@ function computeWER(ref,hyp){
 }
 
 function aaeFeature(ref,hyp){
-  const map={going:'g-dropping / gonna',want:'wanna reduction',them:'dem (th-stopping)',the:'da (th-stopping)',this:'dis (th-stopping)',that:'dat (th-stopping)',ask:'aks (metathesis)',are:'copula deletion',is:'habitual be',ing:'g-dropping'};
-  for(const[k,v]of Object.entries(map)){if(ref.includes(k)||hyp.includes(k))return v;}
-  if(ref.endsWith('ing')&&hyp.endsWith('in'))return'g-dropping';
-  return'phonological variant';
+  const map={going:'g-dropping/gonna',want:'wanna reduction',them:'th-stopping (dem)',the:'th-stopping (da)',this:'th-stopping (dis)',that:'th-stopping (dat)',ask:'metathesis (aks)',are:'copula deletion',is:'habitual be',ing:'g-dropping'};
+  for(const[k,v]of Object.entries(map))if(ref.includes(k)||hyp.includes(k))return v;
+  if(ref.endsWith('ing')&&hyp.endsWith('in'))return 'g-dropping';
+  return 'phonological variant';
 }
 
 async function runWER(){
   const btn=document.getElementById('wer-btn');
-  btn.disabled=true;btn.textContent='Running benchmark...';
+  btn.disabled=true;btn.textContent='Running...';
   document.getElementById('wer-results').style.display='block';
   document.getElementById('wer-log').innerHTML='';
   werData=[];
+  let totalErr=0,totalWords=0,allPairs=[];
 
   const sr=await fetch(`${P}/coraal-samples`);
   const{samples}=await sr.json();
-  let totalErr=0,totalWords=0,allPairs=[];
 
   for(const s of samples){
     werLog(`Processing ${s.id}...`);
     try{
       const tr=await fetch(`${P}/fetch-coraal-transcript?url=${encodeURIComponent(s.transcript_url)}`);
-      const{transcript:gold,error:te}=await tr.json();
-      if(te)throw new Error('Transcript: '+te);
-      werLog(`  Gold (${gold.split(' ').length} words): ${gold.substring(0,70)}...`);
+      const td=await tr.json();
+      if(td.error)throw new Error('Transcript: '+td.error);
+      werLog(`  Gold (${td.transcript.split(' ').length} words): ${td.transcript.substring(0,60)}...`);
 
       const ar=await fetch(`${P}/fetch-audio-b64?url=${encodeURIComponent(s.audio_url)}`);
-      const{base64,mimeType,error:ae}=await ar.json();
-      if(ae)throw new Error('Audio: '+ae);
-      werLog(`  Audio downloaded (${Math.round(base64.length*0.75/1024)}KB). Transcribing...`);
+      const ad=await ar.json();
+      if(ad.error)throw new Error('Audio: '+ad.error);
+      werLog(`  Audio downloaded. Transcribing with Whisper...`);
 
-      const wr=await fetch(`${P}/transcribe`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({audio:base64,mimeType,prompt:''})});
-      const{text:whisper,error:we}=await wr.json();
-      if(we)throw new Error('Whisper: '+we);
-      werLog(`  Whisper: ${whisper.substring(0,70)}...`);
+      const wr=await fetch(`${P}/transcribe`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({audio:ad.base64,mimeType:ad.mimeType,prompt:''})});
+      const wd=await wr.json();
+      if(wd.error)throw new Error('Whisper: '+wd.error);
+      werLog(`  Whisper: ${wd.text.substring(0,60)}...`);
 
-      const{wer,errors,total,pairs}=computeWER(gold,whisper);
+      const{wer,errors,total,pairs}=computeWER(td.transcript,wd.text);
       totalErr+=errors;totalWords+=total;allPairs.push(...pairs);
-      werData.push({id:s.id,gold,whisper,wer:(wer*100).toFixed(1)+'%',errors,total});
-      werLog(`  WER: ${(wer*100).toFixed(1)}% — ${errors} errors in ${total} words`,'ok');
+      werData.push({id:s.id,gold:td.transcript,whisper:wd.text,wer:(wer*100).toFixed(1)+'%',errors,total});
+      werLog(`  WER: ${(wer*100).toFixed(1)}% — ${errors} errors / ${total} words`,'ok');
     }catch(e){werLog('  Error: '+e.message,'err');}
   }
 
-  const overallWER=totalWords>0?((totalErr/totalWords)*100).toFixed(1)+'%':'—';
-  document.getElementById('wer-score').textContent=overallWER;
-  const subs=allPairs.filter(p=>p.type==='sub');
-  const dels=allPairs.filter(p=>p.type==='del');
-  const ins=allPairs.filter(p=>p.type==='ins');
-  document.getElementById('wer-sub').textContent=subs.length;
-  document.getElementById('wer-del').textContent=dels.length;
-  document.getElementById('wer-ins').textContent=ins.length;
+  const overall=totalWords>0?((totalErr/totalWords)*100).toFixed(1)+'%':'—';
+  document.getElementById('wer-score').textContent=overall;
+  document.getElementById('wer-sub').textContent=allPairs.filter(p=>p.type==='sub').length;
+  document.getElementById('wer-del').textContent=allPairs.filter(p=>p.type==='del').length;
+  document.getElementById('wer-ins').textContent=allPairs.filter(p=>p.type==='ins').length;
 
-  // Count substitution pairs
   const counts={};
-  for(const p of subs){
+  for(const p of allPairs.filter(p=>p.type==='sub')){
     const k=p.ref+'→'+p.hyp;
     if(!counts[k])counts[k]={ref:p.ref,hyp:p.hyp,count:0};
     counts[k].count++;
@@ -196,15 +177,13 @@ async function runWER(){
     tr.innerHTML=`<td><strong>${p.ref}</strong></td><td style="color:#c00">${p.hyp}</td><td>${p.count}</td><td style="color:#888;font-size:11px">${aaeFeature(p.ref,p.hyp)}</td>`;
     tb.appendChild(tr);
   }
-
-  // Auto-populate guide tab
   document.getElementById('guide-errors').value=sorted.map(p=>`"${p.ref}" transcribed as "${p.hyp}" (${p.count}x)`).join('\n');
-  werLog(`Benchmark complete. Overall WER: ${overallWER}`,'ok');
+  werLog(`Complete. Overall WER: ${overall}`,'ok');
   btn.disabled=false;btn.textContent='Run WER benchmark';
 }
 
-// ── RE-TRANSCRIBE ────────────────────────────────────────────
-const AAE_PROMPT=`This audio contains African American English (AAE) speech. Transcribe exactly what is said, preserving all AAE linguistic features. Do NOT normalize to Standard American English. Preserve: copula deletion ("he going" not "he is going"), habitual be ("she be working"), g-dropping ("workin", "goin"), th-stopping ("dem" for "them", "dis" for "this"), metathesis ("aks" for "ask"), double negatives ("ain't got no"), and AAE vocabulary ("finna", "bout to", "y'all", "ain't", "gonna").`;
+// ── RE-TRANSCRIBE ─────────────────────────────────────────────
+const AAE_PROMPT=`This audio contains African American English (AAE). Transcribe exactly what is said, preserving all AAE features. Do NOT normalize to Standard American English. Preserve: copula deletion ("he going" not "he is going"), habitual be ("she be working"), g-dropping ("workin", "goin"), th-stopping ("dem", "dis", "dat"), metathesis ("aks" for "ask"), double negatives ("ain't got no"), and AAE vocabulary ("finna", "bout to", "y'all", "ain't", "gonna").`;
 
 function rtLog(msg,t){const el=document.getElementById('rt-log');const d=document.createElement('div');d.className=t?'l'+t:'';d.textContent=new Date().toLocaleTimeString()+'  '+msg;el.appendChild(d);el.scrollTop=el.scrollHeight;}
 
@@ -222,4 +201,85 @@ function parseCSV(text){
 }
 
 async function runRetranscribe(){
-  const
+  const csv=document.getElementById('rt-csv').value.trim();
+  if(!csv){alert('Please paste your AAE CSV rows first.');return;}
+  const rows=parseCSV(csv);
+  if(!rows.length){alert('Could not parse CSV. Make sure you include the header row.');return;}
+  document.getElementById('rt-results').style.display='block';
+  document.getElementById('rt-btn').disabled=true;
+  rtData=[];
+  let done=0,improved=0,same=0,failed=0;
+  const total=rows.length;
+  rtLog(`Found ${total} files to re-transcribe...`);
+
+  for(let i=0;i<rows.length;i+=3){
+    const batch=rows.slice(i,i+3);
+    const bres=await Promise.allSettled(batch.map(async row=>{
+      const url=row.audio_url||row.url||'';
+      const extId=row.external_id||row.name||'';
+      const origTx=row.transcript||'';
+      if(!url)throw new Error('No audio URL');
+      const isAngo=url.includes('ango.ai');
+      const ar=await fetch(`${P}/fetch-audio-b64?url=${encodeURIComponent(url)}&ango=${isAngo}`);
+      const ad=await ar.json();
+      if(ad.error)throw new Error('Download: '+ad.error);
+      const wr=await fetch(`${P}/transcribe`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({audio:ad.base64,mimeType:ad.mimeType,prompt:AAE_PROMPT})});
+      const wd=await wr.json();
+      if(wd.error)throw new Error('Whisper: '+wd.error);
+      return{external_id:extId,audio_url:url,original_transcript:origTx,aae_transcript:wd.text,changed:wd.text.trim()!==origTx.trim()};
+    }));
+
+    for(const br of bres){
+      done++;
+      if(br.status==='fulfilled'){
+        const r=br.value;rtData.push(r);
+        if(r.changed)improved++;else same++;
+        const tb=document.getElementById('rt-body');
+        const tr=document.createElement('tr');
+        tr.innerHTML=`<td style="font-size:11px;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.external_id}</td><td style="font-size:11px;color:#888;max-width:150px">${(r.original_transcript||'—').substring(0,60)}</td><td style="font-size:11px;max-width:150px">${r.aae_transcript.substring(0,60)}</td><td>${r.changed?'<span class="badge b-good">Changed</span>':'<span class="badge b-neu">Same</span>'}</td>`;
+        tb.prepend(tr);
+        rtLog(`✓ ${r.external_id} — ${r.changed?'updated':'no change'}`,r.changed?'ok':'');
+      }else{failed++;rtLog('Failed: '+br.reason,'err');}
+      document.getElementById('rt-done').textContent=done;
+      document.getElementById('rt-improved').textContent=improved;
+      document.getElementById('rt-same').textContent=same;
+      document.getElementById('rt-failed').textContent=failed;
+      document.getElementById('rt-pbar').style.width=Math.round((done/total)*100)+'%';
+    }
+    await new Promise(r=>setTimeout(r,600));
+  }
+  rtLog(`Done! ${improved} of ${done} transcripts updated.`,'ok');
+  document.getElementById('rt-btn').disabled=false;
+}
+
+// ── GUIDE ─────────────────────────────────────────────────────
+async function generateGuide(){
+  const btn=document.getElementById('guide-btn');
+  btn.disabled=true;btn.textContent='Generating...';
+  document.getElementById('guide-results').style.display='block';
+  document.getElementById('guide-output').textContent='Generating your annotator guide...';
+  const errors=document.getElementById('guide-errors').value.trim();
+  const prompt=errors
+    ?`Generate a clear practical annotator guide for transcribing African American English (AAE). These error patterns were found in our WER benchmark:\n\n${errors}\n\nStructure the guide around these patterns. For each: what the annotator will hear, how to transcribe correctly, and a common mistake to avoid. Include a general AAE principles section at the top.`
+    :`Generate a comprehensive practical annotator guide for transcribing African American English (AAE). Cover: copula deletion, habitual be, g-dropping, th-stopping, metathesis (aks/ask), double negatives, AAE vocabulary, and phonological variants. For each feature: what it sounds like, how to transcribe it, and what mistake to avoid. Use clear examples.`;
+  const r=await fetch(`${P}/gpt`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({body:{model:'gpt-4o',temperature:0.2,max_tokens:2500,messages:[{role:'system',content:'You are an expert linguist specializing in African American English (AAE/AAVE). You write clear practical guides for transcription annotators.'},{role:'user',content:prompt}]}})});
+  const d=await r.json();
+  if(d.error){document.getElementById('guide-output').textContent='Error: '+JSON.stringify(d.error);btn.disabled=false;btn.textContent='Generate annotator guide';return;}
+  guideText=d.choices[0].message.content;
+  document.getElementById('guide-output').textContent=guideText;
+  btn.disabled=false;btn.textContent='Regenerate guide';
+}
+
+// ── DOWNLOADS ─────────────────────────────────────────────────
+function dl(content,name,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;a.click();}
+function downloadWERReport(){
+  const h=['id','wer','errors','total','gold','whisper'];
+  dl([h.join(','),...werData.map(r=>h.map(k=>'"'+(r[k]||'').toString().replace(/"/g,'""')+'"').join(','))].join('\n'),'wer_report.csv','text/csv');
+}
+function downloadRT(){
+  const h=['external_id','audio_url','original_transcript','aae_transcript','changed'];
+  dl([h.join(','),...rtData.map(r=>h.map(k=>'"'+(r[k]||'').toString().replace(/"/g,'""')+'"').join(','))].join('\n'),'aae_retranscription.csv','text/csv');
+}
+function downloadGuide(){dl(guideText,'aae_annotator_guide.txt','text/plain');}
+</script>
+</body></html>
