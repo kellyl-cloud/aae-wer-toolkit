@@ -1,29 +1,11 @@
 from flask import Flask, request, jsonify, send_from_directory
-import urllib.request, json, os, base64, re
+import urllib.request, json, os, base64
 import requests
 
 app = Flask(__name__, static_folder='.')
 OPENAI_KEY = os.environ.get("OPENAI_KEY", "")
 ANGO_KEY = os.environ.get("ANGO_KEY", "")
 ANGO_BASE = "https://imeritapi.ango.ai"
-
-CORAAL_SAMPLES = [
-    {
-        "id": "ATL_se1_ag1_f_01",
-        "audio_url": "https://huggingface.co/datasets/zsayers/CORAAL/resolve/main/ATL/audio/ATL_se1_ag1_f_01.wav",
-        "transcript_url": "https://huggingface.co/datasets/zsayers/CORAAL/resolve/main/ATL/transcripts/ATL_se1_ag1_f_01.txt"
-    },
-    {
-        "id": "DCA_se1_ag1_f_01",
-        "audio_url": "https://huggingface.co/datasets/zsayers/CORAAL/resolve/main/DCA/audio/DCA_se1_ag1_f_01.wav",
-        "transcript_url": "https://huggingface.co/datasets/zsayers/CORAAL/resolve/main/DCA/transcripts/DCA_se1_ag1_f_01.txt"
-    },
-    {
-        "id": "PRV_se1_ag1_f_01",
-        "audio_url": "https://huggingface.co/datasets/zsayers/CORAAL/resolve/main/PRV/audio/PRV_se1_ag1_f_01.wav",
-        "transcript_url": "https://huggingface.co/datasets/zsayers/CORAAL/resolve/main/PRV/transcripts/PRV_se1_ag1_f_01.txt"
-    }
-]
 
 @app.route('/')
 def index():
@@ -39,34 +21,20 @@ def set_keys():
     ANGO_KEY = data.get('angoKey', ANGO_KEY)
     return cors(jsonify({"ok": True}))
 
-@app.route('/coraal-samples')
-def coraal_samples():
-    return cors(jsonify({"samples": CORAAL_SAMPLES}))
-
-@app.route('/fetch-coraal-transcript')
-def fetch_coraal_transcript():
-    url = request.args.get('url','')
+@app.route('/gpt', methods=['POST','OPTIONS'])
+def gpt():
+    if request.method == 'OPTIONS':
+        return cors('')
+    data = request.json
+    req = urllib.request.Request(
+        'https://api.openai.com/v1/chat/completions',
+        json.dumps(data['body']).encode(),
+        {'Authorization': f'Bearer {OPENAI_KEY}', 'Content-Type': 'application/json'})
     try:
-        r = requests.get(url, timeout=30, headers={"User-Agent": "Mozilla/5.0"})
-        r.raise_for_status()
-        lines = r.text.strip().split('\n')
-        speech = []
-        for line in lines:
-            parts = line.split('\t')
-            if len(parts) >= 4:
-                text = parts[3].strip()
-                text = re.sub(r'\(.*?\)','',text)
-                text = re.sub(r'\[.*?\]','',text)
-                text = re.sub(r'<.*?>','',text)
-                text = text.strip()
-                if text:
-                    speech.append(text)
-        full = ' '.join(speech)
-        if not full:
-            full = re.sub(r'\s+',' ', re.sub(r'\(.*?\)|\[.*?\]','', r.text)).strip()
-        return cors(jsonify({"transcript": full}))
-    except Exception as e:
-        return cors(jsonify({"error": str(e)})), 500
+        with urllib.request.urlopen(req, timeout=55) as r:
+            return cors(jsonify(json.loads(r.read().decode('utf-8'))))
+    except urllib.error.HTTPError as e:
+        return cors(jsonify({"error": e.read().decode()})), e.code
 
 @app.route('/fetch-audio-b64')
 def fetch_audio_b64():
@@ -81,7 +49,7 @@ def fetch_audio_b64():
             raw += chunk
             if len(raw) > 2 * 1024 * 1024:
                 break
-        ct = r.headers.get("Content-Type","audio/wav")
+        ct = r.headers.get("Content-Type", "audio/wav")
         return cors(jsonify({"base64": base64.b64encode(raw).decode(), "mimeType": ct}))
     except Exception as e:
         return cors(jsonify({"error": str(e)})), 500
@@ -92,9 +60,9 @@ def transcribe():
         return cors('')
     data = request.json
     audio_bytes = base64.b64decode(data['audio'])
-    mime = data.get('mimeType','audio/wav')
+    mime = data.get('mimeType', 'audio/wav')
     fmt = 'mp3' if 'mp3' in mime else 'wav'
-    prompt = data.get('prompt','')
+    prompt = data.get('prompt', '')
     boundary = b'----B' + os.urandom(4).hex().encode()
     parts  = b'--'+boundary+b'\r\nContent-Disposition: form-data; name="model"\r\n\r\nwhisper-1\r\n'
     parts += b'--'+boundary+b'\r\nContent-Disposition: form-data; name="response_format"\r\n\r\njson\r\n'
@@ -112,28 +80,12 @@ def transcribe():
     except urllib.error.HTTPError as e:
         return cors(jsonify({"error": e.read().decode()})), e.code
 
-@app.route('/gpt', methods=['POST','OPTIONS'])
-def gpt():
-    if request.method == 'OPTIONS':
-        return cors('')
-    data = request.json
-    req = urllib.request.Request(
-        'https://api.openai.com/v1/chat/completions',
-        json.dumps(data['body']).encode(),
-        {'Authorization': f'Bearer {OPENAI_KEY}',
-         'Content-Type': 'application/json'})
-    try:
-        with urllib.request.urlopen(req, timeout=55) as r:
-            return cors(jsonify(json.loads(r.read().decode('utf-8'))))
-    except urllib.error.HTTPError as e:
-        return cors(jsonify({"error": e.read().decode()})), e.code
-
 @app.route('/ango-tasks')
 def ango_tasks():
     import urllib.parse
-    project = request.args.get('project','')
-    page = request.args.get('page','1')
-    stage = request.args.get('stage','Complete')
+    project = request.args.get('project', '')
+    page = request.args.get('page', '1')
+    stage = request.args.get('stage', 'Complete')
     url = f"{ANGO_BASE}/v2/project/{project}/tasks?page={page}&limit=50&stage={urllib.parse.quote(stage)}"
     req = urllib.request.Request(url, headers={"apikey": ANGO_KEY})
     try:
