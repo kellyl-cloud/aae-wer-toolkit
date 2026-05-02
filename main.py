@@ -1,27 +1,27 @@
 from flask import Flask, request, jsonify, send_from_directory
-import urllib.request, json, os, base64, requests
+import urllib.request, json, os, base64, re
+import requests
 
 app = Flask(__name__, static_folder='.')
 OPENAI_KEY = os.environ.get("OPENAI_KEY", "")
 ANGO_KEY = os.environ.get("ANGO_KEY", "")
 ANGO_BASE = "https://imeritapi.ango.ai"
 
-# CORAAL samples — real AAE sociolinguistic interviews with gold transcripts
 CORAAL_SAMPLES = [
     {
         "id": "ATL_se1_ag1_f_01",
-        "audio_url": "https://coraal.uoregon.edu/download/ATL/audio/ATL_se1_ag1_f_01.wav",
-        "transcript_url": "https://coraal.uoregon.edu/download/ATL/transcripts/ATL_se1_ag1_f_01.txt"
+        "audio_url": "https://huggingface.co/datasets/zsayers/CORAAL/resolve/main/ATL/audio/ATL_se1_ag1_f_01.wav",
+        "transcript_url": "https://huggingface.co/datasets/zsayers/CORAAL/resolve/main/ATL/transcripts/ATL_se1_ag1_f_01.txt"
     },
     {
         "id": "DCA_se1_ag1_f_01",
-        "audio_url": "https://coraal.uoregon.edu/download/DCA/audio/DCA_se1_ag1_f_01.wav",
-        "transcript_url": "https://coraal.uoregon.edu/download/DCA/transcripts/DCA_se1_ag1_f_01.txt"
+        "audio_url": "https://huggingface.co/datasets/zsayers/CORAAL/resolve/main/DCA/audio/DCA_se1_ag1_f_01.wav",
+        "transcript_url": "https://huggingface.co/datasets/zsayers/CORAAL/resolve/main/DCA/transcripts/DCA_se1_ag1_f_01.txt"
     },
     {
         "id": "PRV_se1_ag1_f_01",
-        "audio_url": "https://coraal.uoregon.edu/download/PRV/audio/PRV_se1_ag1_f_01.wav",
-        "transcript_url": "https://coraal.uoregon.edu/download/PRV/transcripts/PRV_se1_ag1_f_01.txt"
+        "audio_url": "https://huggingface.co/datasets/zsayers/CORAAL/resolve/main/PRV/audio/PRV_se1_ag1_f_01.wav",
+        "transcript_url": "https://huggingface.co/datasets/zsayers/CORAAL/resolve/main/PRV/transcripts/PRV_se1_ag1_f_01.txt"
     }
 ]
 
@@ -47,22 +47,24 @@ def coraal_samples():
 def fetch_coraal_transcript():
     url = request.args.get('url','')
     try:
-        r = requests.get(url, timeout=30)
+        r = requests.get(url, timeout=30, headers={"User-Agent": "Mozilla/5.0"})
+        r.raise_for_status()
         lines = r.text.strip().split('\n')
-        # CORAAL transcripts have speaker turns — extract just the speech text
         speech = []
         for line in lines:
             parts = line.split('\t')
             if len(parts) >= 4:
                 text = parts[3].strip()
-                # Remove CORAAL annotation markers
-                import re
                 text = re.sub(r'\(.*?\)','',text)
                 text = re.sub(r'\[.*?\]','',text)
+                text = re.sub(r'<.*?>','',text)
                 text = text.strip()
                 if text:
                     speech.append(text)
-        return cors(jsonify({"transcript": ' '.join(speech)}))
+        full = ' '.join(speech)
+        if not full:
+            full = re.sub(r'\s+',' ', re.sub(r'\(.*?\)|\[.*?\]','', r.text)).strip()
+        return cors(jsonify({"transcript": full}))
     except Exception as e:
         return cors(jsonify({"error": str(e)})), 500
 
@@ -70,12 +72,16 @@ def fetch_coraal_transcript():
 def fetch_audio_b64():
     url = request.args.get('url','')
     is_ango = request.args.get('ango','false') == 'true'
-    headers = {"apikey": ANGO_KEY} if is_ango else {}
+    headers = {"apikey": ANGO_KEY} if is_ango else {"User-Agent": "Mozilla/5.0"}
     try:
-        req = urllib.request.Request(url, headers=headers)
-        with urllib.request.urlopen(req, timeout=55) as r:
-            raw = r.read(2 * 1024 * 1024)  # max 2MB
-            ct = r.headers.get("Content-Type","audio/wav")
+        r = requests.get(url, headers=headers, timeout=55, stream=True)
+        r.raise_for_status()
+        raw = b''
+        for chunk in r.iter_content(chunk_size=8192):
+            raw += chunk
+            if len(raw) > 2 * 1024 * 1024:
+                break
+        ct = r.headers.get("Content-Type","audio/wav")
         return cors(jsonify({"base64": base64.b64encode(raw).decode(), "mimeType": ct}))
     except Exception as e:
         return cors(jsonify({"error": str(e)})), 500
@@ -88,7 +94,7 @@ def transcribe():
     audio_bytes = base64.b64decode(data['audio'])
     mime = data.get('mimeType','audio/wav')
     fmt = 'mp3' if 'mp3' in mime else 'wav'
-    prompt = data.get('prompt', '')
+    prompt = data.get('prompt','')
     boundary = b'----B' + os.urandom(4).hex().encode()
     parts  = b'--'+boundary+b'\r\nContent-Disposition: form-data; name="model"\r\n\r\nwhisper-1\r\n'
     parts += b'--'+boundary+b'\r\nContent-Disposition: form-data; name="response_format"\r\n\r\njson\r\n'
@@ -96,8 +102,10 @@ def transcribe():
         parts += b'--'+boundary+b'\r\nContent-Disposition: form-data; name="prompt"\r\n\r\n'+prompt.encode()+b'\r\n'
     parts += b'--'+boundary+b'\r\nContent-Disposition: form-data; name="file"; filename="audio.'+fmt.encode()+b'"\r\nContent-Type: '+mime.encode()+b'\r\n\r\n'+audio_bytes+b'\r\n'
     parts += b'--'+boundary+b'--\r\n'
-    req = urllib.request.Request('https://api.openai.com/v1/audio/transcriptions', parts,
-        {'Authorization': f'Bearer {OPENAI_KEY}', 'Content-Type': f'multipart/form-data; boundary={boundary.decode()}'})
+    req = urllib.request.Request(
+        'https://api.openai.com/v1/audio/transcriptions', parts,
+        {'Authorization': f'Bearer {OPENAI_KEY}',
+         'Content-Type': f'multipart/form-data; boundary={boundary.decode()}'})
     try:
         with urllib.request.urlopen(req, timeout=55) as r:
             return cors(jsonify(json.loads(r.read().decode('utf-8'))))
@@ -109,9 +117,11 @@ def gpt():
     if request.method == 'OPTIONS':
         return cors('')
     data = request.json
-    req = urllib.request.Request('https://api.openai.com/v1/chat/completions',
+    req = urllib.request.Request(
+        'https://api.openai.com/v1/chat/completions',
         json.dumps(data['body']).encode(),
-        {'Authorization': f'Bearer {OPENAI_KEY}', 'Content-Type': 'application/json'})
+        {'Authorization': f'Bearer {OPENAI_KEY}',
+         'Content-Type': 'application/json'})
     try:
         with urllib.request.urlopen(req, timeout=55) as r:
             return cors(jsonify(json.loads(r.read().decode('utf-8'))))
@@ -120,6 +130,7 @@ def gpt():
 
 @app.route('/ango-tasks')
 def ango_tasks():
+    import urllib.parse
     project = request.args.get('project','')
     page = request.args.get('page','1')
     stage = request.args.get('stage','Complete')
@@ -133,7 +144,6 @@ def ango_tasks():
 
 def cors(response):
     from flask import make_response
-    import urllib.parse
     if isinstance(response, str):
         response = make_response(response)
     response.headers['Access-Control-Allow-Origin'] = '*'
